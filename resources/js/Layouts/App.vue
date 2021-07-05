@@ -21,12 +21,12 @@
                 </a> -->
                 <inertia-link href="/" 
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >Home
+                    >All
                 </inertia-link>
 
-                <inertia-link href="/about" 
+                <inertia-link href="personal/information/create" 
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >About
+                    >Create
                 </inertia-link>
 
                 <inertia-link href="/contact" 
