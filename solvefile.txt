@@ -1,0 +1,6 @@
+The best way to solve this problem is to update npm because it will update all the packages and install missing packages, as a result you will have laravel mix compiling your assets; right now you are not able to do so.
+
+npm update
+For some people an easier solution can work which is to run the watch-pol command
+
+npm run watch-poll
