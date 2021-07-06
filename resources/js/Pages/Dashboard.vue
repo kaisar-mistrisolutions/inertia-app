@@ -59,16 +59,22 @@
                       >{{ information.about }}</td>
                       <td
                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                      >{{ information.image }}</td>
+                      >
+                      <!-- {{ information.image }} -->
+                      <img
+                      class="rounded-full h-8 w-8 object-cover"
+                      :src="information.image" >
+                      </td>
                       <td
                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                       >{{ information.notification }}</td>
                       <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                         <!-- <a href="#" class="text-indigo-600 hover:text-indigo-900">Delete</a> -->
                         <div class="flex justify-start items-center space-x-2">
-                          <button @click="informationPreview(information.id)" type="button">
+                          <!-- <button @click="informationPreview(information.id)" type="button">
                             <EyeIcon class="h-6 text-green-500" />
-                          </button>
+                          </button> -->
+                          <inertia-link :href="route('informations.preview',information.id)"><EyeIcon class="h-6 text-green-500" /></inertia-link>
                           <button type="button" @click="openModel(information.id)">
                             <TrashIcon class="h-6 text-red-500" />
                           </button>
@@ -219,20 +225,20 @@ export default {
       Inertia.get(`informations/${id}/preview`);
     }
 
-    function searchAction(value) {
-      setTimeout(function () {
-        Inertia.get(
-          `/`,
-          {
-            search: value,
-          },
-          {
-            preserveState: true,
-            preserveScroll: true,
-          }
-        );
-      }, 500);
-    }
+    // function searchAction(value) {
+    //   setTimeout(function () {
+    //     Inertia.get(
+    //       `/`,
+    //       {
+    //         search: value,
+    //       },
+    //       {
+    //         preserveState: true,
+    //         preserveScroll: true,
+    //       }
+    //     );
+    //   }, 500);
+    // }
 
     //   function filter(value) {
     //       setTimeout(function () {

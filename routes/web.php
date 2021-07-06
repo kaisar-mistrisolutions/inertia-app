@@ -33,5 +33,9 @@ Route::get('/create',[PersonalInformationController::class,'create'])->name('pi.
 // Route::get('personal/information/create',[PersonalInformationController::class,'create'])->name('pi.create');
 Route::post('personal/information/submit',[PersonalInformationController::class,'store'])->name('pi.store');
 
-Route::get('/informations/{information}/preview', [PersonalInformationController::class,'show'])->name('informations.preview');
+Route::get('/informations/{information}/preview', [PersonalInformationController::class,'edit'])->name('informations.preview');
+Route::put('/informations/{information}', [PersonalInformationController::class,'update'])->name('informations.update');
+
 Route::delete('/informations/{information}/delete', [PersonalInformationController::class,'destroy'])->name('informations.destroy');
+
+

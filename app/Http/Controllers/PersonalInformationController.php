@@ -59,10 +59,10 @@ class PersonalInformationController extends Controller
             'username'=>$request->username,
             'about'=>$request->about,
             'notification'=>$request->push_notifications,
-            'image'=>$request->hasFile('file_upload')?$request->file('file_upload')->storeAs('personal information',$fileName):null
+            'image'=>$request->hasFile('file_upload')?$request->file('file_upload')->storeAs('personal',$fileName):null
         ]);
 
-        return Redirect::route('pi.create')->with('success','form submited');
+        return Redirect::route('pi.home')->with('success','form submited');
     }
 
     /**
@@ -71,9 +71,11 @@ class PersonalInformationController extends Controller
      * @param  \App\Models\PersonalInformation  $personalInformation
      * @return \Illuminate\Http\Response
      */
-    public function show(PersonalInformation $personalInformation)
+    public function show(PersonalInformation $information)
     {
-        //
+            // return Inertia::render('Details',[
+            //     'information'=>$information,
+            // ]);
     }
 
     /**
@@ -82,9 +84,11 @@ class PersonalInformationController extends Controller
      * @param  \App\Models\PersonalInformation  $personalInformation
      * @return \Illuminate\Http\Response
      */
-    public function edit(PersonalInformation $personalInformation)
+    public function edit(PersonalInformation $information)
     {
-        //
+        return Inertia::render('Details',[
+            'information'=>$information,
+        ]);
     }
 
     /**
@@ -94,9 +98,21 @@ class PersonalInformationController extends Controller
      * @param  \App\Models\PersonalInformation  $personalInformation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PersonalInformation $personalInformation)
+    public function update(Request $request, PersonalInformation $information)
     {
-        //
+        $request->validate([
+            'username'=>'required|string',
+            'about'=>'required|string',
+            'push_notifications'=>'required|string'
+        ]);
+ 
+        $information->update([
+            'username' => $request->username,
+            'about' => $request->about,
+            'notification' => $request->push_notifications
+        ]);
+ 
+        return Redirect::route('pi.home')->with('success','form submited');
     }
 
     /**

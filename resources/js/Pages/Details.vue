@@ -51,7 +51,16 @@
                 <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                   workcation.com/
                 </span>
-                <input v-model="form.username"  type="text" name="username" id="username" autocomplete="username" class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300" />
+                <!-- <input :value="form.username" type="text" name="username" id="username" autocomplete="username" class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300" /> -->
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="block w-full pr-10 sm:text-sm rounded-md"
+                aria-invalid="true"
+                aria-describedby="email-error"
+                v-model="form.username"
+              />
               </div>
             </div>
           </div>
@@ -61,7 +70,7 @@
               About
             </label>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <textarea v-model="form.about"  id="about" name="about" rows="3" class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md" />
+              <textarea id="about" v-model="form.about" name="about" rows="3" class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md" />
               <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
             </div>
           </div>
@@ -161,34 +170,40 @@
 
 <script>
 import AppLayout from '../Layouts/App.vue'
+import { ref,reactive,computed } from 'vue'
+import {Inertia} from "@inertiajs/inertia"
 import {useForm} from "@inertiajs/inertia-vue3"
 export default {
     components: {
         AppLayout,
     },
-    setup() {
-        const form = useForm({
-            username: null,
-            about: null,
-            push_notifications: null,
-            file_upload:null,
-        })
+    props:{
+      information:Object,
+  },
+  setup(props) {
+    const form = useForm({
+      username: props.information.username,
+      about: props.information.about,
+      push_notifications: props.information.notification,
+    });
+ 
+     function submit() {
+      form.put(route('informations.update', props.information.id), {
+        // preserveState: true,
+        // preserveScroll: true,
+        onSuccess: () => {
+          form.reset(
+            "username",
+            "about",
+            "push_notifications",
+          );
+        },
+      });
+    }
 
-        //const toast = inject("toast");
+ 
+    return { form,submit };
+  },
 
-
-        function submit() {
-            form.post("personal/information/submit",{
-                //preserveState:true,
-                //preserveScroll:true,
-                onSuccess: () => {
-                    form.reset('username','about','push_notifications','file_upload')
-                    //toast.show(usePage().props.value.flash.success,{position:'top-right',useDefaultCss:true,type:'success',duration:5000});
-                }
-
-            })
-        }
-        return {form, submit}
-    },
 }
 </script>

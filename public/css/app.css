@@ -946,6 +946,10 @@ video {
 .bg-opacity-75 {
 	--tw-bg-opacity: 0.75;
 }
+.object-cover {
+	-o-object-fit: cover;
+	   object-fit: cover;
+}
 .p-1 {
 	padding: 0.25rem;
 }
@@ -1021,6 +1025,9 @@ video {
 }
 .pb-4 {
 	padding-bottom: 1rem;
+}
+.pr-10 {
+	padding-right: 2.5rem;
 }
 .text-left {
 	text-align: left;

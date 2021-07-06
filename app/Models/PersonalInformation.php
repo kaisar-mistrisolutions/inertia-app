@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class PersonalInformation extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function getImageAttribute($value){
+        return $value?Storage::url($value):null;
+    }
 }
