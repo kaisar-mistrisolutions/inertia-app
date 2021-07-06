@@ -12,24 +12,27 @@ use Illuminate\Support\Str;
 class PersonalInformationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Inertia::render('Welcome');
+        return Inertia::render('Dashboard',[
+            'informations' => PersonalInformation::latest()->paginate(30),
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return Inertia::render('Welcome');
+        return Inertia::render('Create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -102,8 +105,9 @@ class PersonalInformationController extends Controller
      * @param  \App\Models\PersonalInformation  $personalInformation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PersonalInformation $personalInformation)
+    public function destroy(PersonalInformation $information)
     {
-        //
+        $information->delete();
+        return back()->with('success','Information request deleted');
     }
 }

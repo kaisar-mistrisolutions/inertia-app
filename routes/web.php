@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdmissionController;
+
 use App\Http\Controllers\PersonalInformationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,8 +27,11 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
-
 Route::get('/',[PersonalInformationController::class,'index'])->name('pi.home');
+Route::get('/create',[PersonalInformationController::class,'create'])->name('pi.create');
 
-Route::get('personal/information/create',[PersonalInformationController::class,'create'])->name('pi.create');
+// Route::get('personal/information/create',[PersonalInformationController::class,'create'])->name('pi.create');
 Route::post('personal/information/submit',[PersonalInformationController::class,'store'])->name('pi.store');
+
+Route::get('/informations/{information}/preview', [PersonalInformationController::class,'show'])->name('informations.preview');
+Route::delete('/informations/{information}/delete', [PersonalInformationController::class,'destroy'])->name('informations.destroy');
