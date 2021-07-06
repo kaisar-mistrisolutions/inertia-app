@@ -31798,19 +31798,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup(props) {
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_3__.useForm)({
+      _method: 'PUT',
       username: props.information.username,
       about: props.information.about,
-      push_notifications: props.information.notification
+      push_notifications: props.information.notification,
+      //file_upload: props.information.image,
+      file_upload: null
     });
 
     function submit() {
-      form.put(route('informations.update', props.information.id), {
-        // preserveState: true,
-        // preserveScroll: true,
+      form.post(route('informations.update', props.information.id), {
         onSuccess: function onSuccess() {
-          form.reset("username", "about", "push_notifications");
+          form.reset("username", "about", "push_notifications", "file_upload");
         }
       });
+      console.log(form);
     }
 
     return {

@@ -182,23 +182,27 @@ export default {
   },
   setup(props) {
     const form = useForm({
+      _method: 'PUT',
       username: props.information.username,
       about: props.information.about,
       push_notifications: props.information.notification,
+      //file_upload: props.information.image,
+      file_upload: null,
     });
  
      function submit() {
-      form.put(route('informations.update', props.information.id), {
-        // preserveState: true,
-        // preserveScroll: true,
+      form.post(route('informations.update', props.information.id), {
         onSuccess: () => {
           form.reset(
             "username",
             "about",
             "push_notifications",
+            "file_upload",
           );
         },
+    
       });
+        console.log(form);
     }
 
  

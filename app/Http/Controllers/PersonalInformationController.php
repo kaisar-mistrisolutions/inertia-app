@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Storage;
 
 class PersonalInformationController extends Controller
 {
@@ -46,7 +46,7 @@ class PersonalInformationController extends Controller
             'username'=>'required|string',
             'about'=>'required|string',
             'push_notifications'=>'required|string',
-            'file_upload'=>'image|mimes:jpg,jpeg,png,gif'
+            'file_upload'=>'required|image|mimes:jpg,jpeg,png,gif'
         ]);
 //
         $file=$request->file('file_upload');
@@ -100,17 +100,38 @@ class PersonalInformationController extends Controller
      */
     public function update(Request $request, PersonalInformation $information)
     {
+        //dd($request);
         $request->validate([
             'username'=>'required|string',
             'about'=>'required|string',
-            'push_notifications'=>'required|string'
+            'push_notifications'=>'required|string',
+            'file_upload'=>'image|mimes:jpg,jpeg,png,gif'
         ]);
- 
-        $information->update([
-            'username' => $request->username,
-            'about' => $request->about,
-            'notification' => $request->push_notifications
-        ]);
+
+
+        $image=$request->file('file_upload');
+
+        if (isset($image)){
+            $imgName=Str::slug($request->username).uniqid().'.'.$image->getClientOriginalExtension();
+
+            if (Storage::disk('public')->exists($information->image)){
+                Storage::disk('public')->delete($information->image);
+            }
+            $information->update([
+                'username'=>$request->username,
+                'about'=>$request->about,
+                'notification'=>$request->push_notifications,
+                'image'=>$request->file('file_upload')->storeAs('personal',$imgName)
+            ]);
+        }
+        else{
+            $information->update([
+                'username'=>$request->username,
+                'about'=>$request->about,
+                'notification'=>$request->push_notifications,
+                'image'=>$information->file_upload
+            ]);
+        }
  
         return Redirect::route('pi.home')->with('success','form submited');
     }

@@ -9,7 +9,14 @@ use Illuminate\Support\Facades\Storage;
 class PersonalInformation extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
+
+    protected $fillable = [
+        'username',
+        'about',
+        'notification',
+        'image',
+    ];
 
     public function getImageAttribute($value){
         return $value?Storage::url($value):null;
